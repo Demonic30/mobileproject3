@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <style>
+        .page--full_bg__background {
+            background: url('images/trianglify.png');
+            background-size: 100% 100%;
+        }
+
+        .inputBox{
+            /* border: 2px solid white;  */
+            padding:10px; 
+            background: white; 
+            border-bottom-right-radius: 20px; 
+            border-top-left-radius: 10px; 
+            /* opacity: 0.5;  */
+            margin: auto;
+            margin-top: 10px;
+        }
+    </style>
+    <title>Login</title>
+</head>
+
+<body>
+    <ons-page id="page1" modifier="full_bg">
+        <div class="center-div">
+            <img src="images/Logo-PSU-TH-01-1024x724.png" style="width: 250px;">
+            <p class="inputBox">
+                <ons-input id="username" placeholder="Username" modifier="transparent" float></ons-input>
+            </p>
+            <p class="inputBox">
+                <ons-input id="password" modifier="transparent" type="password" placeholder="Password" float></ons-input>
+            </p>
+            <ons-button onclick="login()" class="button">Sign in</ons-button>
+        </div>
+    </ons-page>
+
+    <script>
+    function login() {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+</body>
+
+</html>

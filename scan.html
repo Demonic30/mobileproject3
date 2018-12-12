@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="cordova.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <title>Scanner</title>
+    <style>
+    .center-div
+    {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 250px;
+        height: 250px;
+        border: 2px solid white;
+    }
+    .left{
+        box-sizing: border-box;
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <ons-page>
+        <div class="left" onclick="cameraLight()"><img src="https://firebasestorage.googleapis.com/v0/b/shopee-b3287.appspot.com/o/flash.png?alt=media&token=ea3603bc-2fcf-4f00-8891-7499f16b00c8" alt=""></div>
+        <div onclick="switchCamera()" style="text-align:right; padding: 10px;"><img src="https://firebasestorage.googleapis.com/v0/b/shopee-b3287.appspot.com/o/switch-camera.png?alt=media&token=a39f1884-7be8-400d-9400-5ef211c4270f"></div>
+        <div class="center-div"></div>
+    </ons-page>
+    <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        
+        var light = 0;
+        var camera = 0;
+        function onDeviceReady() {
+            QRScanner.scan(displayContents);
+            function displayContents(err, text) {
+                if (err) {
+                } else {
+                    localStorage.setItem("code", text);
+                    QRScanner.hide();
+                    window.location.href = 'home.html';
+                }
+            }
+    
+            QRScanner.getStatus(function (status) {
+                var button = localStorage.getItem("button");
+                if(button == "light")
+                {
+                    console.log("Light status: " + status.lightEnabled);
+                    if(status.lightEnabled == false && light == 1){
+                        QRScanner.enableLight(function(err, status){
+                            err && console.error(err);
+                            console.log(status);
+                        });
+                    } else if(status.lightEnabled == true && light == 1){
+                        QRScanner.disableLight(function (err, status) {
+                            err && console.error(err);
+                            console.log(status);
+                        });
+                    }
+                } else {
+                    console.log("Camera status: " + status.currentCamera);
+                    if(status.currentCamera == 0 && camera == 1){
+                        QRScanner.useFrontCamera(function(err, status){
+                            err && console.error(err);
+                            console.log(status);
+                        });
+                    }
+                    else if(status.currentCamera == 1 && camera == 1){
+                        QRScanner.useBackCamera(function(err, status){
+                            err && console.error(err);
+                            console.log(status);
+                        });
+                    }
+                }
+            });
+            QRScanner.show();
+        }   
+        
+        function cameraLight() {
+            light = 1;
+            localStorage.setItem("button", "light");
+            onDeviceReady();
+        }
+        function switchCamera(){
+            camera = 1;
+            localStorage.setItem("button", "camera");
+            onDeviceReady();
+        }
+    </script>
+</body>
+
+</html>
